@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title> Posting | Post </title>
+      
+      <!-- CSS -->
+      <link rel="stylesheet"  type="text/css" href="/css/style.css">
+      <link rel="icon" href="favicon.ico">
+      
+      <!-- Font -->
+      <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+      <!-- Bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
+      <script>
+          let user;
+          getSelf(function (u) {
+            user = u;
+          });
+
+          $(document).ready(function () {
+          });
+
+          function getSelf(callback) {
+            $.ajax({
+              type: "GET",
+              url: "/api/islogin",
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,},
+              contentType: "json",
+              data: {},
+              async: false,
+              success: function (response) {
+                callback(response.user);
+              },
+              error: function (error) {
+                customAlert(error.responseJSON.errorMessage);
+              },
+            });
+          }
+
+
+        function save_posting() {
+            let user = $('#user').val();
+            let password = $('#password').val();
+            let title = $('#title').val();
+            let content = $('#content').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/posts",
+                contentType: "application/json",
+                headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`},
+                data: JSON.stringify({
+                    user: user,
+                    password: password,
+                    title: title,
+                    content: content
+                }),
+                success: function (response) {
+                    alert(response["Message"]) 
+                    window.location.reload()
+                  },
+                error: function (error) {
+                    customAlert(error.responseJSON.errorMessage);
+                },
+                
+            });
+        }
+
+        function customAlert(text, confirmCallback) {
+            $("#alertText").text(text);
+            $("#alertModal").modal("show");
+            if (confirmCallback) {
+              $("#alertModal .btn-confirm").click(confirmCallback);
+            }
+        }
+
+        function signOut() {
+          if (confirm('로그아웃 하시겠습니까?')) {
+              localStorage.clear();
+              window.location.href = '/';
+          }else {
+              window.location.reload();
+          }
+        }
+
+         //로그인 확인
+        function loginCheck() {
+          if (!localStorage.getItem("token")) {
+              alert("로그인이 필요한 기능입니다.")
+              location.href = "/"
+          }
+        } 
+      </script>
+    </head>
+
+    <body>
+      <div class="background">
+        <h1 onclick="location.href='/postlist.html'">게시글 작성페이지</h1>
+        <button type="button" onclick="signOut()" class="btn btn-outline-light">log-Out</button>
+      </div>
+    
+      <div class ="posting">
+        <div class="mb-3 row">
+          <label for="inputUser" class="col-sm-2 col-form-label">USER</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="user" name="user" onclick="loginCheck()">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">PASSWORD</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" name="password" onclick="loginCheck()">
+          </div>        
+        </div>
+        <div style="height: 10px;"></div>
+        <hr> 
+         <div class="mb-3 row">
+          <label for="inputTitle" class="col-sm-2 col-form-label">TITLE</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" name="title" onclick="loginCheck()">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="inputContent" class="col-sm-2 col-form-label">CONTENT</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="content" name="content" rows="3" onclick="loginCheck()"></textarea>
+          </div>
+        </div>
+        <div class="posting_btns">
+          <button type="button" onclick="save_posting()" class="btn btn-dark btn-lg"> SAVE </button> 
+        </div>
+      </div>
+
+      <!-- custom alarm -->
+      <div
+      class="modal text-left"
+      id="alertModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="alertModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="alertModalLabel">알림</h5>
+          </div>
+          <div class="modal-body" id="alertText">
+            정말로 로그아웃 하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-sparta btn-confirm"
+              data-dismiss="modal">
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+      integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+      crossorigin="anonymous"
+    ></script>
+ </body>
+</html>
+

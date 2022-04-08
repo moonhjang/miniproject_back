@@ -4,11 +4,27 @@ const router = express.Router();
 const User = require("../schemas/user");
 const authMiddleware = require("../middlewares/auth-middleware");
 
+//post
+router.post("/posts", authMiddleware, async (req, res) => {
+    const { user, password, title, content } = req.body
+
+    //postsId: 날짜기준으로 번호 만들기
+    const date = new Date()
+    let postsId = date.valueOf();
+
+    if (user,password,title,content){
+        await Posts.create({ postsId, user, password, title, content })
+        return res.status(200).send({Message: '저장완료🤸'});
+    }
+});
+
+
 
 //로그인하기
 router.post("/login", async (req, res) => {
     const {userId, password} = req.body;
     const user = await User.findOne({userId}).exec();
+    console.log(user.userId)
 
     if (!user) {
         res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
@@ -26,14 +42,11 @@ router.post("/login", async (req, res) => {
 });
 
 
-// 로그인시, 미들웨어로 회원인식 및 회원으로 입장가능
+// 로그인시, 미들웨어로 회원인식 및 회원으로 입장가능 (보류) 
 router.get("/islogin", authMiddleware, async (req, res) => {
-    // const token = req.header("Authorization")
     const {user} = res.locals;
     res.send({
-        user:{
-            user
-        },
+        user,
     });
 });
 
