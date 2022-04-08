@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/moonhjang/miniproject_back/issues"
   },
-  "homepage": "https://github.com/moonhjang/miniproject_back#readme"
+  "homepage": "https://github.com/moonhjang/miniproject_back#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.10"
+  }
 }
