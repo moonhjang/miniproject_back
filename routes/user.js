@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");    
 const router = express.Router();
 const User = require("../schemas/user");
-// const authMiddleware = require("../middlewares/auth-middleware");
+const authMiddleware = require("../middlewares/auth-middleware");
 
 
 //로그인하기
@@ -11,18 +11,12 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({userId}).exec();
 
     if (!user) {
-        res.status(400).send({});
-        // res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
+        res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
         return;
     }
 
-    // //암호화된 비밀번호 풀기
-    // const existPw = user.password 
-    // const decryptedPw = CryptoJS.AES.decrypt(existPw,process.env.keyForDecrypt);
-    // const originPw = decryptedPw.toString(CryptoJS.enc.Utf8);
-
     if (password !== user.password) {
-        res.status(400).send({});
+        res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
         return;
     } else {
         const token = jwt.sign({ userId : user.userId},process.env.JWT_SECRET);
@@ -32,11 +26,24 @@ router.post("/login", async (req, res) => {
 });
 
 
+// 로그인시, 미들웨어로 회원인식 및 회원으로 입장가능
+router.get("/islogin", authMiddleware, async (req, res) => {
+    // const token = req.header("Authorization")
+    const {user} = res.locals;
+    res.send({
+        user:{
+            user
+        },
+    });
+});
+
+
+
 // 회원가입
 router.post("/signup", async (req, res) => {
     const { userId, nickName, password, passwordCheck } = req.body
 
-    const user = new User({ nickName, password})
+    const user = new User({ userId, nickName, password})
     await user.save();
     res.status(201).send({});       
 
@@ -78,17 +85,6 @@ router.post("/nickCheck", async (req, res) => {
 
 });
 
-
-// // 로그인시, 미들웨어로 회원인식 및 회원으로 입장가능
-// router.get("/users/me", authMiddleware, async (req, res) => {
-//     // const token = req.header("Authorization")
-//     const {user} = res.locals;
-//     res.send({
-//         user:{
-//             user
-//         },
-//     });
-// });
 
 
 
