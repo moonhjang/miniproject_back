@@ -25,7 +25,6 @@ const authMiddleware = require("../middlewares/auth-middleware");
 router.post("/login", async (req, res) => {
     const {userId, password} = req.body;
     const user = await User.findOne({userId}).exec();
-    // console.log(user.userId)
 
     if (!user) {
         res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
@@ -36,7 +35,6 @@ router.post("/login", async (req, res) => {
     const existPw = user.hashedpassword 
     const decryptedPw = CryptoJS.AES.decrypt(existPw,process.env.keyForDecrypt);
     const originPw = decryptedPw.toString(CryptoJS.enc.Utf8);
-    console.log(originPw)
 
 
     if (originPw != password) {
@@ -54,7 +52,10 @@ router.post("/login", async (req, res) => {
 router.get("/islogin", authMiddleware, async (req, res) => {
     const {user} = res.locals;
     res.send({
-        user,
+        user: {
+            userId: user.userId,
+            nickName: user.nickName,
+        }
     });
 });
 
