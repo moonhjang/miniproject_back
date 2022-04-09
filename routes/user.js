@@ -32,11 +32,11 @@ router.post("/login", async (req, res) => {
         return;
     }
 
-    //암호화 비밀번호 확인 (작동안됨 > 확인필요)
-    // const existPw = user.hashedpassword 
-    // const decryptedPw = CryptoJS.AES.decrypt(existPw,process.env.keyForDecrypt);
-    // const originPw = decryptedPw.toString(CryptoJS.enc.Utf8);
-    // console.log(originPw)
+    //암호화 비밀번호 확인
+    const existPw = user.hashedpassword 
+    const decryptedPw = CryptoJS.AES.decrypt(existPw,process.env.keyForDecrypt);
+    const originPw = decryptedPw.toString(CryptoJS.enc.Utf8);
+    console.log(originPw)
 
 
     if (originPw != password) {
@@ -64,14 +64,15 @@ router.get("/islogin", authMiddleware, async (req, res) => {
 router.post("/signup", async (req, res) => {
     const { userId, nickName, password, passwordCheck } = req.body
 
-    // //비밀번호 암호화 (작동됨) 
-    // const hashedpassword = CryptoJS.AES.encrypt(password, process.env.keyForDecrypt).toString();
+    // //비밀번호 암호화
+    const hashedpassword = CryptoJS.AES.encrypt(password, process.env.keyForDecrypt).toString();
 
     const user = new User({ userId, nickName, hashedpassword})
     await user.save();
     res.status(201).send({});       
 
 });
+
 
 
 //회원가입: 아이디 중복확인
@@ -90,6 +91,7 @@ router.post("/idCheck", async (req, res) => {
     }     
 
 });
+
 
 
 //회원가입: 닉네임 중복확인
