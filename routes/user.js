@@ -64,16 +64,24 @@ router.get("/islogin", authMiddleware, async (req, res) => {
 // 회원가입
 router.post("/signup", async (req, res) => {
     const { userId, nickName, password, passwordCheck } = req.body
+    // console.log(userId, nickName, password, passwordCheck)
 
     // //비밀번호 암호화
     const hashedpassword = CryptoJS.AES.encrypt(password, process.env.keyForDecrypt).toString();
 
-    const user = new User({ userId, nickName, hashedpassword})
+    const startTime = '';
+    const totalTime = 0 ;
+    const yesTime = 0 ;
+    const connecting = 'false';
+    const friendList = [];
+ 
+    const user = new User({ userId, nickName, hashedpassword, totalTime})
+
+    // const user = new User({ userId, nickName, hashedpassword, startTime, totalTime, yesTime, connecting, friendList})
     await user.save();
     res.status(201).send({});       
 
 });
-
 
 
 //회원가입: 아이디 중복확인

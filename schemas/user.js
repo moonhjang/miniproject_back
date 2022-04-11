@@ -16,10 +16,11 @@ const moment = require("moment");
 
 const UserSchema = new mongoose.Schema({
   userId: String,
-  nickname: String,
+  nickName: String,
   hashedpassword: String,
   startTime: String,
   totalTime:Number,
+  yesTime:Number,
   connecting:Boolean,
   friendList:[],
 });
