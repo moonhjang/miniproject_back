@@ -7,17 +7,61 @@ require("moment-timezone");
 moment.tz.setDefault("Asia/seoul")
 
 
-//작업중
-router.get('/searchfollow',(req,res)=>{
-    const {userId} = req.body;
-    const token = req.headers.cookie.split('=')[1];
+// follows 전체조회
+router.get('/:user/getfollows', async (req,res)=>{
+    let userId = req.params.user
+    const user = await User.findOne({userId}).exec();
+    console.log(user.friendList)
+
+    
+
+});
+
+
+// follows 추가하기
+router.patch('/searchfollow', async (req,res)=>{
+    const {userId, friendId} = req.body;
+    const user = await User.findOne({userId})
+
+    for (let i=0; i< user.friendList.length; i++){
+        
+        if(user.friendList[i] === friendId){
+            return res.status(400).send({msg:'이미 추가된 친구입니다.'})
+        } else {
+            user.friendList = [friendId]
+            await user.save()
+
+            return res.status(200).send({msg:'완료1'}); 
+        } 
+    }
+
+    if (user.friendList.length === 0){
+        user.friendList = [friendId]
+        console.log(friendId)
+        await user.save()
+        return res.status(200).send({msg:'완료2'}); 
+    }
+});
+
+
+
+
+
+
+
+// follows 찾기
+router.get('/searchfollow',async (req,res)=>{
+    // const {userId} = req.body;
+    // const token = req.headers.cookie.split('=')[1];
+    let userId = req.params.user
+    const user = await User.find({})
     
 
 });
 
 
 //작업중
-router.post('/searchFollow',(req,res)=>{
+router.post('/searchFollow',async (req,res)=>{
     const {userId} = req.body;
     const token = req.headers.cookie.split('=')[1];
 });
