@@ -13,12 +13,12 @@ router.get('/:user/getfollows', async (req,res)=>{
 
     const user = await User.findOne({userId});
     
-   const friendsinfo = [];
+    const friendsinfo = [];
 
     for (const friend of user.friendList){
         const info = await User.find({ userId :friend},    
             {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1 })
-            friendsinfo.push(info)
+            friendsinfo.push(info[0])
     }
 
     return res.status(201).json(friendsinfo);
