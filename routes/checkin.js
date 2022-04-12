@@ -5,10 +5,11 @@ const router = express.Router();
 const moment = require("moment");
 require("moment-timezone");
 moment.tz.setDefault("Asia/seoul")
+const authMiddleware = require("../middlewares/auth-middleware");
 
 
 // follows 전체조회
-router.get('/:user/getfollows', async (req,res)=>{
+router.get('/:user/getfollows',authMiddleware, async (req,res)=>{
     let userId = req.params.user
 
     const user = await User.findOne({userId});
@@ -25,17 +26,8 @@ router.get('/:user/getfollows', async (req,res)=>{
 
 });
 
-
-// follows 찾기
-router.get('/searchfollow',(req,res)=>{
-    const {userId} = req.body;
-    const token = req.headers.cookie.split('=')[1];
-    const decoded = 1
-});
-
-
 // follows 추가하기
-router.post('/searchfollow',async(req,res)=>{
+router.post('/searchfollow',authMiddleware,async(req,res)=>{
     const {userId,friendId} = req.body;
     const existUser = await User.find({friendId});
     if(!existUser){
@@ -48,7 +40,7 @@ router.post('/searchfollow',async(req,res)=>{
 
 
 // StartTime 
-router.post('/:userId/start',async(req,res)=>{
+router.post('/:userId/start',authMiddleware,async(req,res)=>{
     const {userId} = req.body;
 
     const startTime = new moment().format('YYYY-MM-DD HH:mm');

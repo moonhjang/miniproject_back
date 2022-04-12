@@ -1,10 +1,11 @@
 const express = require("express");
 const Comments = require("../schemas/comments");
 const router = express.Router();
+const authMiddleware = require("../middlewares/auth-middleware");
 
 
 // Comment조회: 클라이언트에 보내기
-router.get('/:user/comments', async (req, res) => {
+router.get('/:user/comments',authMiddleware, async (req, res) => {
     let userId = req.params.user
     const comment = await Comments.find({userId}).exec();
     console.log(comment)
@@ -13,7 +14,7 @@ router.get('/:user/comments', async (req, res) => {
 });
 
 // Comment추가
-router.post('/:user/comments', async (req, res) => {
+router.post('/:user/comments',authMiddleware, async (req, res) => {
     const{ writer, content, Date, userId} = req.body
  
     await Comments.create({writer, content, Date, userId})
@@ -22,7 +23,7 @@ router.post('/:user/comments', async (req, res) => {
 
 
 // Comment삭제 
-router.delete('/:user/comments', async (req, res) => {
+router.delete('/:user/comments',authMiddleware, async (req, res) => {
     const{ commentId, userId} = req.body
 
     await Comments.deleteOne({ commentId });
