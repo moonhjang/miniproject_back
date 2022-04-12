@@ -72,7 +72,12 @@ router.post("/signup", async (req, res) => {
     // //비밀번호 암호화
     const hashedpassword = CryptoJS.AES.encrypt(password, process.env.keyForDecrypt).toString();
  
-    const user = new User({ userId, nickName, hashedpassword})
+    const startTime = '';
+    const totalTime = 0;
+    const connecting = false;
+    const userIamge = '';
+
+    const user = new User({ userId, nickName, hashedpassword, startTime,totalTime, connecting,userIamge})
 
     await user.save();
     res.status(201).send({});       
