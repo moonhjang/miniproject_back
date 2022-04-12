@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema({
   hashedpassword: String,
   startTime: String,
   totalTime:Number,
-  yesTime:Number,
   connecting:Boolean,
   friendList:[],
 });

@@ -41,9 +41,24 @@ router.post("/login", async (req, res) => {
         res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
         return;
     } else {
-        const token = jwt.sign({ userId : user.userId },process.env.JWT_SECRET);
-            res.send ({token});
+        const userinfo = await User.find({ userId : user.userId},    
+            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, connecting:1, friendList:1 })
+        const token = jwt.sign({userinfo},process.env.JWT_SECRET);
+        res.send ({token})
+
+        // const token = jwt.sign({ userId : user.userId },process.env.JWT_SECRET);
+        //     res.send ({token});
     }
+
+    // const friendsinfo = [];
+
+    // for (const friend of user.friendList){
+    //     const info = await User.find({ userId :friend},    
+    //         {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1 })
+    //         friendsinfo.push(info[0])
+    // }
+
+    // return res.status(201).json(friendsinfo);
 
 });
 
@@ -54,7 +69,8 @@ router.get("/islogin", authMiddleware, async (req, res) => {
     res.send({
         user: {
             userId: user.userId,
-            nickName: user.nickName,
+            nickName: user.nickName, 
+            
         }
     });
 });
@@ -68,16 +84,9 @@ router.post("/signup", async (req, res) => {
 
     // //비밀번호 암호화
     const hashedpassword = CryptoJS.AES.encrypt(password, process.env.keyForDecrypt).toString();
-
-    const startTime = '';
-    const totalTime = 0 ;
-    const yesTime = 0 ;
-    const connecting = 'false';
-    const friendList = [];
  
-    const user = new User({ userId, nickName, hashedpassword, totalTime})
+    const user = new User({ userId, nickName, hashedpassword})
 
-    // const user = new User({ userId, nickName, hashedpassword, startTime, totalTime, yesTime, connecting, friendList})
     await user.save();
     res.status(201).send({});       
 
@@ -93,7 +102,7 @@ router.post("/idCheck", async (req, res) => {
     });
 
     if (existUsers.length) {
-        res.status(400).send({result: "false"});
+        res.status(201).send({result: "false"});
         return;
     } else {
         res.status(201).send({result: "true"}); 
@@ -112,7 +121,7 @@ router.post("/nickCheck", async (req, res) => {
     });
 
     if (existUsers.length) {
-        res.status(400).send({result: "false"});
+        res.status(201).send({result: "false"});
         return;
     } else {
         res.status(201).send({result: "true"}); 
