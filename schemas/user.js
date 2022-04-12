@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   startTime: String,
   totalTime:Number,
   connecting:Boolean,
+  userIamge:String,
   friendList:[],
 });
 

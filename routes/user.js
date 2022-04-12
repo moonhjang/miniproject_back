@@ -41,24 +41,11 @@ router.post("/login", async (req, res) => {
         res.status(400).send({errorMessage: '닉네임 또는 비밀번호를 확인해주세요'});
         return;
     } else {
-        const userinfo = await User.find({ userId : user.userId},    
-            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, connecting:1, friendList:1 })
-        const token = jwt.sign({userinfo},process.env.JWT_SECRET);
-        res.send ({token})
-
-        // const token = jwt.sign({ userId : user.userId },process.env.JWT_SECRET);
-        //     res.send ({token});
+        const userinfo = await User.findOne({ userId : user.userId},    
+            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, connecting:1, friendList:1, userIamge:1 })
+        const token = jwt.sign({ userId : user.userId},process.env.JWT_SECRET);
+        res.json({token, userinfo})
     }
-
-    // const friendsinfo = [];
-
-    // for (const friend of user.friendList){
-    //     const info = await User.find({ userId :friend},    
-    //         {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1 })
-    //         friendsinfo.push(info[0])
-    // }
-
-    // return res.status(201).json(friendsinfo);
 
 });
 
@@ -70,7 +57,7 @@ router.get("/islogin", authMiddleware, async (req, res) => {
         user: {
             userId: user.userId,
             nickName: user.nickName, 
-            
+
         }
     });
 });
