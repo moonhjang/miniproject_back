@@ -11,14 +11,12 @@ const authMiddleware = require("../middlewares/auth-middleware");
 // follows 전체조회
 router.get('/:user/getfollows',authMiddleware, async (req,res)=>{
     let userId = req.params.user
-
     const user = await User.findOne({userId});
-    
     const friendsinfo = [];
 
     for (const friend of user.friendList){
         const info = await User.find({ userId :friend},    
-            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1 })
+            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1, userImage: 1})
             friendsinfo.push(info[0])
     }
 
@@ -29,10 +27,12 @@ router.get('/:user/getfollows',authMiddleware, async (req,res)=>{
 // follows 추가하기
 router.post('/searchfollow',authMiddleware,async(req,res)=>{
     const {userId,friendId} = req.body;
-    const existUser = await User.find({friendId});
-    if(!existUser){
+    const existUser = await User.find({userId: friendId});
+
+    if(existUser.length === 0){
         return res.send({msg:"없는 유저입니다!"})
-    }
+    } 
+
     await User.updateOne({userId},{$addToSet:{friendList:`${friendId}`}})
     return res.send({msg:"추가완료"})
 });
