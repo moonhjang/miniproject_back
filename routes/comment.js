@@ -15,10 +15,11 @@ router.get('/:user/comments',authMiddleware, async (req, res) => {
 
 // Comment추가
 router.post('/:user/comments',authMiddleware, async (req, res) => {
-    const{ writer, content, Date, userId} = req.body
+    const{ writer, content, date, userId} = req.body
  
-    await Comments.create({writer, content, Date, userId})
-    return res.status(200).send({ });
+    const comment = await Comments.create({writer, content, date, userId})
+    console.log(comment)
+    return res.status(200).send({msg: 'success',comment });
 });
 
 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const commentSchema = new mongoose.Schema({
     writer: String,
     content: String,
-    Date: String,
+    date: String,
     userId: String,
     // 수정된 부분: date: date, userId: userID로 된 부분 value 값 string으로 수정
 });

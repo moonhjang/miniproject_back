@@ -53,11 +53,16 @@ router.post("/login", async (req, res) => {
 // 로그인시, 미들웨어로 회원인식 및 회원으로 입장가능 (보류) 
 router.get("/islogin", authMiddleware, async (req, res) => {
     const {user} = res.locals;
+    console.log({user})
     res.send({
         user: {
             userId: user.userId,
-            nickName: user.nickName, 
-
+            nickName: user.nickName,
+            startTime: user.startTime,
+            totalTime: user.totalTime,
+            connecting: user.connecting,
+            friendList: user.friendList,
+            userIamge: user.userIamge,
         }
     });
 });

@@ -41,9 +41,9 @@ router.post('/searchfollow',authMiddleware,async(req,res)=>{
 
 // StartTime 
 router.post('/:userId/start',authMiddleware,async(req,res)=>{
-    const {userId} = req.body;
+    const {userId, startTime} = req.body;
 
-    const startTime = new moment().format('YYYY-MM-DD HH:mm');
+    //startTime = new moment().format('YYYY-MM-DD HH:mm');
     
     await User.updateOne({userId},{$set:{startTime:startTime,connecting:true}});
 
@@ -54,16 +54,16 @@ router.post('/:userId/start',authMiddleware,async(req,res)=>{
 
 // EndTime 
 router.post('/:userId/end', async(req,res)=>{
-    const {userId} = req.body;
+    const {userId, endTime} = req.body;
     const userInfo = await User.find({userId})
     // db에 있는 startTime 꺼내오기
     const startTimeIndb = userInfo[0].startTime
     // string타입인 startTime moment object로 바꿔주기
-    const startTime = moment(startTimeIndb,'YYYY-MM-DD HH:mm');
+    const startTime = moment(startTimeIndb,'YYYY-MM-DD HH:mm:ss');
     // endTime 생성
-    const endTime = new moment();
+    const endTimes = moment(endTime,'YYYY-MM-DD HH:mm:ss');
     // 시간차 계산
-    const todayTime = moment.duration(endTime.diff(startTime)).asMinutes()
+    const todayTime = moment.duration(endTimes.diff(startTime)).asMinutes()
    
     
      // type : 누적시간 분으로 환산한 number
@@ -71,7 +71,7 @@ router.post('/:userId/end', async(req,res)=>{
     const totalTime = userInfo[0].totalTime + todayTime
     // totalTime 데이터 추가, connecting false
     await User.updateOne({userId},{$set:{totalTime:totalTime, connecting:false}});
-    return res.send({msg:"체크아웃완료!"})
+    return res.send({msg:"체크아웃완료!", totalTime})
     
 })
 
