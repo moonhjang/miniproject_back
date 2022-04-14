@@ -8,6 +8,16 @@ moment.tz.setDefault("Asia/seoul")
 const authMiddleware = require("../middlewares/auth-middleware");
 
 
+
+// 상태메시지 수정
+router.post('/:user/status',authMiddleware,async(req,res)=>{
+    const {statusMeg, userId} = req.body;
+
+    await User.updateOne({userId},{$set:{statusMeg}})
+    return res.status(200).json({ msg: '완료' });
+});
+
+
 // follows 전체조회
 router.get('/:user/getfollows',authMiddleware, async (req,res)=>{
     let userId = req.params.user
@@ -16,7 +26,7 @@ router.get('/:user/getfollows',authMiddleware, async (req,res)=>{
 
     for (const friend of user.friendList){
         const info = await User.find({ userId :friend},    
-            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1, userImage: 1})
+            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, yesTime:1, connecting:1, friendList:1, userImage: 1, statusMeg:1 })
             friendsinfo.push(info[0])
     }
 

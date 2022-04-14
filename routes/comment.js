@@ -1,5 +1,6 @@
 const express = require("express");
 const Comments = require("../schemas/comments");
+const {ObjectId} = require("mongodb")
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware");
 
@@ -15,9 +16,9 @@ router.get('/:user/comments',authMiddleware, async (req, res) => {
 
 // Comment추가
 router.post('/:user/comments',authMiddleware, async (req, res) => {
-    const{ writer, content, date, userId} = req.body
- 
-    const comment = await Comments.create({writer, content, date, userId})
+    const{ writer, nickName, content, date, userId} = req.body
+
+    const comment = await Comments.create({writer, nickName, content, date, userId})
     console.log(comment)
     return res.status(200).send({msg: 'success',comment });
 });
@@ -26,8 +27,9 @@ router.post('/:user/comments',authMiddleware, async (req, res) => {
 // Comment삭제 
 router.delete('/:user/comments',authMiddleware, async (req, res) => {
     const{ commentId, userId} = req.body
+    console.log(commentId, userId)
 
-    await Comments.deleteOne({ commentId });
+    await Comments.deleteOne({ _id: ObjectId(commentId) });
     return res.status(200).send({msg: '완료' });
 });
 

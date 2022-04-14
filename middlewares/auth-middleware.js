@@ -4,7 +4,7 @@ const User = require("../schemas/user");
 module.exports = (req, res, next) => {
     const { authorization } = req.headers;
     const [authType, authToken] = authorization.split(" ");
-    // console.log(authorization)
+    console.log(authorization)
 
     if (!authToken || authType !== "Bearer") {
         res.status(401).json({

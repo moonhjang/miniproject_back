@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   totalTime:Number,
   connecting:Boolean,
   userImage:String,
+  statusMeg:String,
   friendList:[],
 });
 
