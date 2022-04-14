@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
         return;
     } else {
         const userinfo = await User.findOne({ userId : user.userId},    
-            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, connecting:1, friendList:1, userIamge:1 })
+            {_id:0, userId:1, nickName:1, startTime:1, totalTime:1, connecting:1, friendList:1, userImage:1 })
         const token = jwt.sign({ userId : user.userId},process.env.JWT_SECRET);
         res.json({token, userinfo})
     }
@@ -62,7 +62,7 @@ router.get("/islogin", authMiddleware, async (req, res) => {
             totalTime: user.totalTime,
             connecting: user.connecting,
             friendList: user.friendList,
-            userIamge: user.userIamge,
+            userImage: user.userImage,
         }
     });
 });
@@ -80,9 +80,9 @@ router.post("/signup", async (req, res) => {
     const startTime = '';
     const totalTime = 0;
     const connecting = false;
-    const userIamge = '';
+    const userImage = '';
 
-    const user = new User({ userId, nickName, hashedpassword, startTime,totalTime, connecting,userIamge})
+    const user = new User({ userId, nickName, hashedpassword, startTime,totalTime, connecting,userImage})
 
     await user.save();
     res.status(201).send({});       
