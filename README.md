@@ -1,1 +1,1 @@
-# miniproject_back
+# Social Study Network(SSN:쓴)
