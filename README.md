@@ -41,11 +41,9 @@
 <details>
     <summary>API Reference</summary>
 	
-	<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702651-a7dc70df-9c43-4359-973b-61975bb49de9.png"><img src="https://user-images.githubusercontent.com/99785621/163702651-a7dc70df-9c43-4359-973b-61975bb49de9.png" width="70%" height="70%" style="max-width: 100%;">
-		
-	<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702654-291bddb8-f3ec-4a3b-a695-d6c65cbcf202.png"><img src="https://user-images.githubusercontent.com/99785621/163702654-291bddb8-f3ec-4a3b-a695-d6c65cbcf202.png" width="70%" height="70%" style="max-width: 100%;">
-		
-	<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702661-55a0e01f-3b05-4582-9692-71cc3dcd0c26.png"><img src="https://user-images.githubusercontent.com/99785621/163702661-55a0e01f-3b05-4582-9692-71cc3dcd0c26.png" width="70%" height="70%" style="max-width: 100%;">
+	![image](https://user-images.githubusercontent.com/99785621/163702893-0944cc50-4d6e-4958-afd1-0ba73a79c0f2.png)
+	![image](https://user-images.githubusercontent.com/99785621/163702896-3974e31d-2d37-46dd-a65a-d1ce4eeed40c.png)
+	![image](https://user-images.githubusercontent.com/99785621/163702898-b40e0f52-6d9c-40a4-838a-df614befb1dc.png)
 
 <!-- summary 아래 한칸 공백 두고 내용 삽입 -->
 
