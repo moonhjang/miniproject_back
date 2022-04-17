@@ -38,16 +38,12 @@
 <br/><br/>
 	
 ## API Reference
-<details>
-    <summary>API Reference</summary>
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702893-0944cc50-4d6e-4958-afd1-0ba73a79c0f2.png"><img src="https://user-images.githubusercontent.com/99785621/163702893-0944cc50-4d6e-4958-afd1-0ba73a79c0f2.png" width="70%" height="70%" style="max-width: 100%;">
 	
-	![image](https://user-images.githubusercontent.com/99785621/163702893-0944cc50-4d6e-4958-afd1-0ba73a79c0f2.png)
-	![image](https://user-images.githubusercontent.com/99785621/163702896-3974e31d-2d37-46dd-a65a-d1ce4eeed40c.png)
-	![image](https://user-images.githubusercontent.com/99785621/163702898-b40e0f52-6d9c-40a4-838a-df614befb1dc.png)
-
-<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-
-</details>
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702896-3974e31d-2d37-46dd-a65a-d1ce4eeed40c.png"><img src="https://user-images.githubusercontent.com/99785621/163702896-3974e31d-2d37-46dd-a65a-d1ce4eeed40c.png" width="70%" height="70%" style="max-width: 100%;">
+	
+<a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/99785621/163702898-b40e0f52-6d9c-40a4-838a-df614befb1dc.png"><img src="https://user-images.githubusercontent.com/99785621/163702898-b40e0f52-6d9c-40a4-838a-df614befb1dc.png" width="70%" height="70%" style="max-width: 100%;">
+		
 <br/><br/>
 		
 ***
